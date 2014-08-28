@@ -1,0 +1,21 @@
+parentDir: /data
+web2pyAppDir: "{{web2pyDir}}/applications"
+apiDir: "{{web2pyAppDir}}/api"
+peyotlDir: "{{parentDir}}/peyotl"
+phylesystemDir: "{{parentDir}}/phylesystem"
+phylesystemDir0: "{{phylesystemDir}}/phylesystem-0"
+phylesystemDir1: "{{phylesystemDir}}/phylesystem-1"
+configDest: "{{apiDir}}/private/"
+opentreeDir: "{{parentDir}}/opentree"
+curatorDir: "{{opentreeDir}}/curator"
+webappDir: "{{opentreeDir}}/webapp"
+opentreeApp: opentree
+curatorApp: curator
+curatorAppDir: "{{web2pyAppDir}}/{{curatorApp}}"
+opentreeAppDir: "{{web2pyAppDir}}/{{opentreeApp}}"
+
+apiUrl: https://github.com/OpenTreeOfLife/phylesystem-api.git
+peyotlUrl: https://github.com/OpenTreeOfLife/peyotl.git
+phylesystemUrl0: https://github.com/OpenTreeOfLife/phylesystem.git
+#phylesystemUrl1: https://github.com/OpenTreeOfLife/phylesystem-1.git
+opentreeUrl: https://github.com/OpenTreeOfLife/opentree.git

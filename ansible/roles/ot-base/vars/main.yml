@@ -1,0 +1,3 @@
+otbaseUrl: https://github.com/OpenTreeOfLife/ot-base.git
+appParentDir: /data
+appDir: "{{appParentDir}}/otbase"

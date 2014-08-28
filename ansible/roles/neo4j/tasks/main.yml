@@ -1,0 +1,27 @@
+#- name: removing neo4j
+#  shell: "cd ~"
+# shell: "rm ~/{{neo4jTarFile}}"
+
+- name: checking if neo4j downloaded
+  stat: path="~/{{neo4jTarFile}}"
+  register: downloaded
+
+- name: download neo4j
+  get_url: url="{{neo4jUrl}}" dest="~/{{neo4jTarFile}}"
+  when: downloaded.stat.exists == False
+
+- name: extract and rename neo4j
+  shell: "mkdir -p {{neo4jXDir}}"
+
+- name: extracting neo4j from tar ball
+  shell: "tar -xvf /root/{{neo4jTarFile}} -C {{neo4jXDir}}"
+
+- name: stop neo4j application directory
+  shell: "{{neo4jApplicationDir}}/bin/neo4j stop"
+  ignore_errors: yes
+
+- name: removing neo4j application directory
+  shell: "rm -rf {{neo4jApplicationDir}}"
+
+- name: copying
+  command: "mv {{neo4jXDir}}/{{neo4jDirName}} {{neo4jApplicationDir}}"

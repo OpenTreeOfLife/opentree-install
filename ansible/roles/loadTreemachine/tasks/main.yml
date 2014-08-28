@@ -1,0 +1,21 @@
+- name: downloading taxonomy
+  command: "wget {{taxonomy}}"
+  args:
+    chdir: "{{downloadDir}}"
+    creates: ottol_dumpv1_w_preottol_ids_uniqunames.tar.gz
+- name: extracting taxonomy
+  command: tar xf ottol_dumpv1_w_preottol_ids_uniqunames.tar.gz
+  args:
+    chdir: "{{downloadDir}}"
+
+#copying compiled file since cannot compile since maven returns an error. currently copying compiled file to server
+- name: compiling treemachine
+#  command: "./mvn_cmdline.sh"
+  copy: src=treemachine-0.0.1-SNAPSHOT-jar-with-dependencies.jar dest="{{downloadDir}}/target"
+#  args:
+#    chdir: "{{downloadDir}}"
+
+- name: creating graph database
+  command: java -Xmx3G -jar target/treemachine-0.0.1-SNAPSHOT-jar-with-dependencies.jar inittax ottol_dump_w_uniquenames_preottol_ids ottol_dump.synonyms test.db
+  args:
+    chdir: "{{downloadDir}}"

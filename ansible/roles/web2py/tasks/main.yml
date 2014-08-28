@@ -1,0 +1,38 @@
+- include: setfacts.yml
+
+- name: stop web2py
+  shell: "service web2py stop"
+  ignore_errors: True
+  when: ansible_os_family == "Debian"
+
+- name: uninstall web2py as daemon
+  shell: "update-rc.d -f   web2py remove"
+  args:
+    chdir: "{{web2pyDir}}"
+  ignore_errors: True
+  when: ansible_os_family == "Debian"
+
+- name: delete web2py dir if var is set
+  command: "rm -rf {{web2pyDir}}"
+  when: deleteWeb2py == true
+
+- name: checking if web2py downloaded
+  stat: path="{{web2pyDir}}"
+  register: downloaded
+
+- name: download web2py
+  git: repo="{{web2pyUrl}}" dest="{{web2pyDir}}" version="{{web2pyVersion}}"
+  when: downloaded.stat.exists == False
+
+
+- name: copy daemon file
+  action: copy src=web2py dest=/etc/init.d/web2py
+  when: ansible_os_family == "Debian"
+
+- name: install web2py as daemon
+  shell: "update-rc.d web2py defaults"
+  when: ansible_os_family == "Debian"
+
+- name: start web2py as daemon
+  shell: "/etc/init.d/web2py start"
+  when: ansible_os_family == "Debian"

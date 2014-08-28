@@ -1,0 +1,37 @@
+- hosts: treemachine
+  vars:
+    neo4jVersion: 1.9.8
+    neo4jApplicationDir: "{{neo4jXDir}}/neo4j-community-{{neo4jVersion}}-treemachine"
+    deleteDb: True
+  roles:
+    - dependencies
+    - java
+    - neo4j
+    - jade
+    - ot-base
+    - treemachine
+
+- hosts: taxomachine
+  vars:
+    neo4jVersion: 1.9.8
+    neo4jApplicationDir: "/data/neo4j-community-{{neo4jVersion}}-taxomachine"
+    deleteDb: True
+  roles:
+    - neo4j
+    - taxomachine
+
+- hosts: oti
+  vars:
+    neo4jVersion: 1.9.8
+    neo4jApplicationDir: "/data/neo4j-community-{{neo4jVersion}}-oti"
+  roles:
+    - neo4j
+    - oti
+
+- hosts: apps
+  vars:
+    deleteWeb2py: True
+    deletePhylesystem: True
+  roles:
+    - web2py
+    - web2PyApps

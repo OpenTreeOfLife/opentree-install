@@ -1,0 +1,13 @@
+- name: checking if ot-base is cloned
+  stat: path="{{appDir}}"
+  register: otbase
+
+- name: git clone ot-base
+  git: repo="{{otbaseUrl}}"
+       dest="{{appDir}}"
+  when: otbase.stat.exists == false
+
+- name: install ot-base
+  shell: "sh mvn_install.sh"
+  args:
+    chdir: "{{appDir}}"
