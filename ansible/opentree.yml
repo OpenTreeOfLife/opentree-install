@@ -1,10 +1,18 @@
+- hosts: apps
+  vars:
+    deleteWeb2py: True
+    deletePhylesystem: True
+  roles:
+    - dependencies
+    - web2py
+    - web2PyApps
+
 - hosts: treemachine
   vars:
     neo4jVersion: 1.9.8
     neo4jApplicationDir: "{{neo4jXDir}}/neo4j-community-{{neo4jVersion}}-treemachine"
     deleteDb: True
   roles:
-    - dependencies
     - java
     - neo4j
     - jade
@@ -27,11 +35,3 @@
   roles:
     - neo4j
     - oti
-
-- hosts: apps
-  vars:
-    deleteWeb2py: True
-    deletePhylesystem: True
-  roles:
-    - web2py
-    - web2PyApps
