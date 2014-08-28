@@ -1,0 +1,3 @@
+jadeUrl: https://github.com/FePhyFoFum/jade.git
+appParentDir: /data
+appDir: "{{appParentDir}}/jade"

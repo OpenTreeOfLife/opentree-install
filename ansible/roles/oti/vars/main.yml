@@ -1,0 +1,14 @@
+otiUrl: https://github.com/OpenTreeOfLife/oti.git
+appParentDir: /data
+appDir: "{{appParentDir}}/oti"
+jarFile: "oti-neo4j-plugins-0.0.1-SNAPSHOT.jar"
+otiPluginDir: "{{neo4jApplicationDir}}/plugins/"
+neo4jExec: "{{neo4jApplicationDir}}/bin/neo4j"
+configDir: "{{neo4jApplicationDir}}/conf/"
+taxoDb: /data/taxomachine/taxomachine.db.tgz
+
+# change neo4j server property in files directory if you change this value
+db: "{{appDir}}/taxomachine.db"
+
+otiLocalUrl: http://localhost:7478/db/data/
+apiUrl: http://localhost:8000/api

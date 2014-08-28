@@ -1,0 +1,26 @@
+#- hosts: taxomachine
+#  vars:
+#    neo4jVersion: 1.9.8
+#    neo4jApplicationDir: "/data/neo4j-community-{{neo4jVersion}}-taxomachine"
+#    deleteDb: true
+#  roles:
+#    - dependencies
+#    - java
+#    - neo4j
+#    - taxomachine
+
+- hosts: apps
+  vars:
+    deleteWeb2py: True
+    deletePhylesystem: True
+  roles:
+    - web2py
+    - web2PyApps
+
+- hosts: oti
+  vars:
+    neo4jVersion: 1.9.8
+    neo4jApplicationDir: "/data/neo4j-community-{{neo4jVersion}}-oti"
+  roles:
+    - neo4j
+    - oti

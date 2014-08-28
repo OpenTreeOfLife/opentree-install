@@ -1,0 +1,14 @@
+[taxomachine]
+10.1.1.2
+
+[treemachine]
+10.1.1.2
+
+[oti]
+10.1.1.2
+
+[apps]
+10.1.1.2
+
+[taxomachine:vars]
+is_vagrant=true

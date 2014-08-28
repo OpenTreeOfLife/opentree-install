@@ -1,0 +1,13 @@
+- name: checking if jade is cloned
+  stat: path="{{appParentDir}}/jade"
+  register: jade
+
+- name: git clone jade
+  git: repo="{{jadeUrl}}"
+       dest="{{appDir}}"
+  when: jade.stat.exists == false
+
+- name: install jade
+  shell: "sh mvn_install.sh"
+  args:
+    chdir: "{{appDir}}"

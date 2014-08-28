@@ -1,0 +1,42 @@
+- name: checking if ot-base is cloned
+  stat: path="{{appDir}}"
+  register: oti
+
+- name: git clone oti
+  git: repo="{{otiUrl}}"
+       dest="{{appDir}}"
+  when: oti.stat.exists == false
+
+- name: make oti plugin
+  shell: "sh mvn_serverplugins.sh"
+  args:
+    chdir: "{{appDir}}"
+
+
+
+- name: stop oti neo4j instance
+  command: "{{neo4jExec}} stop"
+
+- name: copy oti database into oti
+  command: "cp {{taxoDb}} ."
+  args:
+    chdir: "{{appDir}}"
+
+- name: extracting db
+  command: "tar xf {{taxoDb}}"
+  args:
+    chdir: "{{appDir}}"
+
+- name: copy files into server
+  command: "cp {{appDir}}/target/{{jarFile}} {{otiPluginDir}}"
+
+- name: setting config
+  action: copy src=neo4j-server.properties dest="{{configDir}}"
+
+- name: start oti
+  command: "{{neo4jExec}} start"
+
+- name: load data into oti
+  command: "python index_current_repo.py {{otiLocalUrl}} {{apiUrl}}"
+  args:
+    chdir: "{{appDir}}"

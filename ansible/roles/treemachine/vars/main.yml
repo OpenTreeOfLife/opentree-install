@@ -1,0 +1,12 @@
+treemachineUrl: https://github.com/OpenTreeOfLife/treemachine.git
+appParentDir: /data
+appDir: "{{appParentDir}}/treemachine"
+jarFile: "treemachine-neo4j-plugins-0.0.1-SNAPSHOT.jar"
+treePluginDir: "{{neo4jApplicationDir}}/plugins/"
+neo4jExec: "{{neo4jApplicationDir}}/bin/neo4j"
+pHttp: 7474
+pHttps: 7473
+configDir: "{{neo4jApplicationDir}}/conf/"
+taxonomy: https://bitbucket.org/blackrim/avatol-taxonomies/downloads/ottol_dumpv1_w_preottol_ids_uniqunames.tar.gz
+downloadDir: /data/treemachine
+dbName: treemachine.db

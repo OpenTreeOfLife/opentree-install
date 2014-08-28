@@ -1,0 +1,6 @@
+neo4jUrl: http://download.neo4j.org/artifact?edition=community&version=1.9.8&distribution=tarball
+neo4jVersion: 1.9.8
+neo4jDirName: "neo4j-community-{{neo4jVersion}}"
+neo4jTarFile: "{{neo4jDirName}}.tar.gz"
+neo4jXDir: /data
+neo4jApplicationDir: neo4j-community-Application

@@ -1,0 +1,103 @@
+# cloning taxomachine
+
+- name: checking if taxomachine is cloned
+  stat: path="{{appDir}}"
+  register: taxomachine
+
+- name: git clone taxomachine
+  git: repo="{{taxomachineUrl}}"
+       dest="{{appDir}}"
+  when: taxomachine.stat.exists == false
+
+# END: cloning taxomachine
+
+
+- name: install taxomachine for oti
+  shell: "sh mvn_install.sh"
+  args:
+      chdir: "{{appDir}}"
+
+
+# compile taxomachine as plugin and with dependencies
+
+- name: make taxomachine plugin
+  shell: "sh mvn_serverplugins.sh"
+  args:
+    chdir: "{{appDir}}"
+
+- name: copy plugin into server (taxomachine)
+  command: "cp {{appDir}}/target/{{jarFile}} {{taxoPluginDir}}"
+
+- name: setting config taxomachine
+  action: copy src=neo4j-server.properties dest="{{configDir}}"
+
+- name: building taxomachine wih dependencies
+  command: "sh mvn_cmdline.sh"
+  args:
+    chdir: "{{appDir}}"
+
+# END: compile taxomachine as plugin and with dependencies
+
+
+
+# prepare ott file
+
+- name: make downloads directory
+  command: "mkdir -p {{downloadDir}}"
+
+# removed since taxomachine cannot read this file format. It needs pipe separator
+#- name: download ott file
+#  get_url: url="{{ottUrl}}" dest="{{downloadDir}}/{{ottFile}}"
+
+- name: copying aster file
+  copy: src="{{ottFile}}" dest="{{downloadDir}}"
+
+- name: extracting taxonomy
+  command: "tar xf {{ottFile}}"
+  args:
+    chdir: "{{downloadDir}}"
+
+# END: prepare ott file
+
+
+
+- name: stop taxomachine neo4j instance
+  command: "{{neo4jExec}} stop"
+
+
+# creating database
+
+- name: check and delete database
+  command: "rm -rf {{dbFile}}"
+  args:
+    chdir: "{{appDir}}"
+  when: deleteDb == True
+
+- name: creating taxonomy database - loadtaxsyn
+  command: "java -Xmx3g -XX:-UseConcMarkSweepGC -jar target/{{taxoJar}} loadtaxsyn ott {{taxoFile}} {{synFile}} {{dbFile}}"
+  args:
+    chdir: "{{appDir}}"
+
+#- name: indexing taxonomy database for TNRS - makecontexts
+#  shell: "java -Xmx3g -XX:-UseConcMarkSweepGC -jar target/{{taxoJar}} makecontexts {{dbFile}}"
+#  args:
+#    chdir: "{{appDir}}"
+
+- name: indexing taxonomy database for TNRS - makegenusindexes
+  shell: "java -Xmx3g -XX:-UseConcMarkSweepGC -jar target/{{taxoJar}} makegenusindexes {{dbFile}}"
+  args:
+    chdir: "{{appDir}}"
+
+- name: archive database for oti
+  shell: tar -cf taxomachine.db.tgz taxomachine.db
+  args:
+    chdir: "{{appDir}}"
+
+# END: creating database
+
+
+- name: setting neo4j config
+  action: copy src=neo4j-server.properties dest="{{configDir}}"
+
+- name: start taxomachine neo4j instance
+  command: "{{neo4jExec}} restart"

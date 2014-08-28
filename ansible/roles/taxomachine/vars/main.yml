@@ -1,0 +1,17 @@
+taxomachineUrl: https://github.com/OpenTreeOfLife/taxomachine.git
+appParentDir: /data
+appDir: "{{appParentDir}}/taxomachine"
+jarFile: "taxomachine-neo4j-plugins-0.0.1-SNAPSHOT.jar"
+taxoPluginDir: "{{neo4jApplicationDir}}/plugins/"
+neo4jExec: "{{neo4jApplicationDir}}/bin/neo4j"
+configDir: "{{neo4jApplicationDir}}/conf/"
+ottUrl: http://files.opentreeoflife.org/ott/aster.tgz
+ottFile: aster.tgz
+downloadDir: /data/downloads
+taxoFile: "{{downloadDir}}/aster/taxonomy.tsv"
+synFile: "{{downloadDir}}/aster/synonyms.tsv"
+
+# change neo4j server properties file if you are changing this name
+dbFile: taxomachine.db
+
+taxoJar: taxomachine-0.0.1-SNAPSHOT-jar-with-dependencies.jar
