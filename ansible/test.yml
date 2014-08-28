@@ -9,13 +9,13 @@
 #    - neo4j
 #    - taxomachine
 
-- hosts: apps
-  vars:
-    deleteWeb2py: True
-    deletePhylesystem: True
-  roles:
-    - web2py
-    - web2PyApps
+#- hosts: apps
+#  vars:
+#    deleteWeb2py: True
+#    deletePhylesystem: True
+#  roles:
+#    - web2py
+#    - web2PyApps
 
 - hosts: oti
   vars:
