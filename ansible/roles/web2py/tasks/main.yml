@@ -29,6 +29,10 @@
   action: copy src=web2py dest=/etc/init.d/web2py
   when: ansible_os_family == "Debian"
 
+- name: make daemon file executable
+  file: path=/etc/init.d/web2py state=touch mode=0755
+  when: ansible_os_family == "Debian"
+
 - name: install web2py as daemon
   shell: "update-rc.d web2py defaults"
   when: ansible_os_family == "Debian"
