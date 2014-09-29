@@ -34,7 +34,7 @@
   copy: src=.peyotl dest=~
 
 - name: peyotl setup
-  command: "python setup.py develop"
+  command: "{{virtualenv_home}}/venv/bin/python setup.py develop"
   args:
     chdir: "{{peyotlDir}}"
 
