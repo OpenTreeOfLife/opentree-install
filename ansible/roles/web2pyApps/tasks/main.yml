@@ -26,7 +26,7 @@
   when: downloaded.stat.exists == False
 
 - name: peyotl install requirements
-  pip: requirements=./requirements.txt
+  pip: virtualenv={{virtualenv_home}}/venv requirements=./requirements.txt
   args:
     chdir: "{{peyotlDir}}"
 
