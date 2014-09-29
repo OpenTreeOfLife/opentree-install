@@ -13,5 +13,8 @@
 - name: install python-pip
   apt: pkg=python-pip state=present
 
+- name: install python-virtualenv
+  apt: pkg=python-virtualenv state=present
+
 - name: install curl
   apt: pkg=curl state=present

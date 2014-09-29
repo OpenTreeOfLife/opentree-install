@@ -4,6 +4,7 @@
 #
 # To use this file
 # cp ubuntu.sh /etc/init.d/web2py
+# chmod 0755 /etc/init.d/web2py
 #
 # To automatitcally start at reboot
 # sudo update-rc.d web2py defaults
@@ -30,6 +31,12 @@ DAEMON_DIR=/data/$NAME
 LOGFILE=$DAEMON_DIR/log.txt
 DAEMON_ARGS="web2py.py --password=abc123 --pid_filename=$PIDFILE --ip=0.0.0.0 --log_filename=$LOGFILE"
 DAEMON_USER=root
+
+# Use the expected virtual environment, if found
+VENV=/data/venv
+[ -f $VENV ] && $DAEMON=$VENV/bin/python
+# possibly not needed, but let's use the activate command as well
+[ -f $VENV ] && source $VENV/bin/activate  
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0

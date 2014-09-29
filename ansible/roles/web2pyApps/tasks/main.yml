@@ -1,3 +1,4 @@
+- include: ../../common/tasks/setfacts.yml 
 - include: ../../web2py/tasks/setfacts.yml
 
 - name: checking if web2py downloaded
@@ -25,7 +26,7 @@
   when: downloaded.stat.exists == False
 
 - name: peyotl install requirements
-  command: "pip install -r requirements.txt"
+  pip: requirements=./requirements.txt
   args:
     chdir: "{{peyotlDir}}"
 
@@ -46,7 +47,7 @@
   when: downloaded.stat.exists == False
 
 - name: api - install requirements
-  command: "pip install -r requirements.txt"
+  pip: virtualenv={{virtualenv_home}}/venv requirements=./requirements.txt
   args:
     chdir: "{{apiDir}}"
 
@@ -57,12 +58,12 @@
   git: repo="{{opentreeUrl}}" dest="{{opentreeDir}}" update=yes
 
 - name: opentree - install requirements
-  command: "pip install -r requirements.txt"
+  pip: virtualenv={{virtualenv_home}}/venv requirements=./requirements.txt
   args:
     chdir: "{{opentreeDir}}"
 
 - name: curator - install requirements
-  command: "pip install -r requirements.txt"
+  pip: virtualenv={{virtualenv_home}}/venv requirements=./requirements.txt
   args:
     chdir: "{{curatorDir}}"
 
