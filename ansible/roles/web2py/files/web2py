@@ -34,9 +34,9 @@ DAEMON_USER=root
 
 # Use the expected virtual environment, if found
 VENV=/data/venv
-[ -f $VENV ] && $DAEMON=$VENV/bin/python
+[ -d $VENV ] && $DAEMON=$VENV/bin/python
 # possibly not needed, but let's use the activate command as well
-[ -f $VENV ] && source $VENV/bin/activate  
+[ -d $VENV ] && source $VENV/bin/activate  
 
 # Exit if the package is not installed
 [ -x "$DAEMON" ] || exit 0
